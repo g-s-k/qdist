@@ -12,6 +12,11 @@ impl Plugin for QDist {
             name: "QDist".to_string(),
             vendor: "g-s-k".to_string(),
             unique_id: 24112018,
+
+            inputs: 2,
+            outputs: 2,
+            parameters: 1,
+
             ..Info::default()
         }
     }
