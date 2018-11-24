@@ -64,6 +64,22 @@ impl Plugin for QDist {
             _ => "".to_string(),
         }
     }
+
+    fn process(&mut self, buffer: AudioBuffer<f32>) {
+        let (inputs, outputs) = buffer.split();
+
+        for (input_buffer, output_buffer) in inputs.iter().zip(outputs) {
+            for (input_sample, output_sample) in input_buffer.iter().zip(output_buffer) {
+
+                if *input_sample >= 0.0 {
+                    *output_sample = input_sample.min(self.threshold) / self.threshold
+                }
+                else {
+                    *output_sample = input_sample.min(-self.threshold) / self.threshold
+                }
+            }
+        }
+    }
 }
 
 plugin_main!(QDist);
