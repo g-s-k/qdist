@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["George Kaplan <george@georgekaplan.xyz>"]
 
 [dependencies]
-vst2 = "0.0.1"
+vst = "*"
 
 [lib]
 crate-type = ["dylib"]
