@@ -1,4 +1,5 @@
-#[macro_use] extern crate vst;
+#[macro_use]
+extern crate vst;
 extern crate num_traits;
 
 use vst::buffer::AudioBuffer;
@@ -74,8 +75,10 @@ impl Plugin for QDist {
     }
 
     fn process(&mut self, buffer: &mut AudioBuffer<f32>) {
-        for (input_buffer, output_buffer) in buffer.zip() {
-            for (input_sample, output_sample) in input_buffer.into_iter().zip(output_buffer.into_iter()) {
+        for (input, output) in buffer.zip() {
+            for (input_sample, output_sample) in
+                input.into_iter().zip(output.into_iter())
+            {
 
                 *output_sample = thresh(*input_sample + self.bias, self.threshold);
             }
@@ -84,7 +87,9 @@ impl Plugin for QDist {
 }
 
 fn thresh<T>(input: T, threshold: T) -> T
-where T: num_traits::float::Float + Default {
+where
+    T: num_traits::float::Float + Default,
+{
     if input < T::default() {
         input.max(-threshold) / threshold
     } else {
