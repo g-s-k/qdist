@@ -36,7 +36,7 @@ impl Plugin for QDist {
     fn get_parameter(&self, index: i32) -> f32 {
         match index {
             0 => self.threshold,
-            1 => self.bias,
+            1 => self.bias / 2.0 + 0.5,
             _ => 0.0,
         }
     }
@@ -86,7 +86,7 @@ impl Plugin for QDist {
 fn thresh<T>(input: T, threshold: T) -> T
 where T: num_traits::float::Float + Default {
     if input < T::default() {
-        input.min(-threshold) / threshold
+        input.max(-threshold) / threshold
     } else {
         input.min(threshold) / threshold
     }
